@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Equipement</title>
+  <link rel="stylesheet" href="/webjars/leaflet/1.7.1/leaflet.css" />
+  <style>
+    #map { height: 400px; }
+  </style>
+</head>
+<body>
+<h1>Ajouter un Équipement</h1>
+<form id="addEquipementForm">
+  <label for="nomEquipement">Nom de l'équipement:</label>
+  <input type="text" id="nomEquipement" name="nomEquipement" required>
+
+  <label for="addresse">Adresse:</label>
+  <input type="text" id="addresse" name="addresse" required>
+
+  <label for="ville">Ville:</label>
+  <input type="text" id="ville" name="ville" required>
+
+  <label for="latitude">Latitude:</label>
+  <input type="text" id="latitude" name="latitude" required>
+
+  <label for="longitude">Longitude:</label>
+  <input type="text" id="longitude" name="longitude" required>
+
+  <button type="submit">Ajouter Équipement</button>
+</form>
+
+<div id="map"></div>
+
+<script src="/webjars/leaflet/1.7.1/leaflet.js"></script>
+<script>
+  // Fonction pour mettre à jour la carte avec de nouvelles coordonnées
+  function updateMapWithCoordinates(latitude, longitude) {
+    map.setView([latitude, longitude], 13);
+    addMarker(latitude, longitude);
+  }
+
+  // Lorsque le formulaire est soumis
+  document.getElementById('addEquipementForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    var formData = new FormData(this);
+    var jsonData = Object.fromEntries(formData.entries());
+
+    fetch('/api/equipement/add', {
+      method: 'POST',
+      body: JSON.stringify(jsonData),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(response => {
+      if (response.ok) {
+        return response.json(); // Récupérer la réponse JSON du serveur
+      } else {
+        throw new Error('Erreur lors de l\'ajout de l\'équipement.');
+      }
+    }).then(data => {
+      // Mettre à jour la carte avec les nouvelles coordonnées
+      updateMapWithCoordinates(data.latitude, data.longitude);
+      alert('Équipement ajouté avec succès!');
+    }).catch(error => {
+      console.error('Erreur:', error);
+      alert('Erreur lors de l\'ajout de l\'équipement.');
+    });
+  });
+
+</script>
+</body>
+</html>
