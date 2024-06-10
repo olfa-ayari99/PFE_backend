@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/map")
 
 public class MapController {

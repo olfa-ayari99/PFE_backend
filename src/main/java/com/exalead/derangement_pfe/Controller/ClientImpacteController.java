@@ -11,6 +11,8 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/api/v1/ClientImpacte")
 @Tag(name="ClientImpacte")
 public class ClientImpacteController {
 

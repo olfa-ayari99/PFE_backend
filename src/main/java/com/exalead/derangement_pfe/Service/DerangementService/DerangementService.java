@@ -62,9 +62,15 @@ public class DerangementService implements IDerangementService {
     }
 
     @Override
+    public List<Derangement> getDerangementByUser (Long idUser){
+        return derangementRepository.findByUser_IdUser(idUser);
+
+    }
+    @Override
     public List<Derangement> findDerangementByStatus(Statut statut){
         return derangementRepository.findByStatut(statut);
     }
+
 
     @Override
     public List<Derangement> findDerangementByClient (Long idClient){
@@ -85,6 +91,8 @@ public class DerangementService implements IDerangementService {
             return derangementRepository.findAll();
         }
     }
+
+
 
 
 

@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @AllArgsConstructor
+@RequestMapping("/api/v1/derangement")
+
 @Tag(name="derangement")
 public class DerangementController {
 
@@ -52,6 +54,11 @@ public class DerangementController {
     public List<Derangement> getAllDerangements(){
         List<Derangement> derangements=derangementService.getAllDerangements();
         return derangements;
+    }
+    @GetMapping("/getAllDerangementByUser/{idUser}")
+    @ResponseBody
+    public List<Derangement> getDerangementByUser (@PathVariable ("idUser") Long idUser){
+        return  derangementService.getDerangementByUser(idUser);
     }
 
 

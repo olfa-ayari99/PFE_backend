@@ -13,5 +13,9 @@ public interface DerangementRepository extends JpaRepository<Derangement,Long> {
     List<Derangement> findByClientImpactes_IdClient(Long idClient);
     List<Derangement> findByStatutAndClientImpactes_IdClient(Statut statut, Long idClient);
 
+    List<Derangement> findByUser_IdUser(Long idUser);
+
+
+
 
 }

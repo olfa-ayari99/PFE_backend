@@ -18,4 +18,6 @@ public interface IDerangementService {
     public List<Derangement> findDerangementByClient (Long idClient);
     public List<Derangement> searchDerangements(Map<String, Object> criteria);
 
+    public  List<Derangement> getDerangementByUser (Long idUser);
+
 }

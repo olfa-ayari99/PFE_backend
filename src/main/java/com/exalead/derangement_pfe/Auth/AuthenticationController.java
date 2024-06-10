@@ -1,6 +1,7 @@
 package com.exalead.derangement_pfe.Auth;
 
 import com.exalead.derangement_pfe.Entity.ErrorResponse;
+import com.exalead.derangement_pfe.Exceptions.ExceptionRepresentation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.io.IOException;
+import java.util.Collections;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 @Tag(name = "authentication")
@@ -32,7 +35,7 @@ public class AuthenticationController {
             AuthenticationResponse response = service.register(request);
             return ResponseEntity.ok(response);
         } catch (AuthenticationService.UserAlreadyExistsException e) {
-            return ResponseEntity.badRequest().body("User with this email already exists.");
+            return ResponseEntity.badRequest().body(Collections.singletonMap("validationErrors", e.getValidationErrors()));
         }
     }
     @PostMapping("/authenticate")
@@ -41,15 +44,29 @@ public class AuthenticationController {
             return ResponseEntity.ok(service.authenticate(request));
         } catch (BadCredentialsException ex) {
             String errorMessage = ex.getMessage();
+            ExceptionRepresentation exceptionRepresentation;
+
             if (errorMessage.contains("Invalid email")) {
-                return ResponseEntity.badRequest().body(new ErrorResponse("Invalid email", "Email cannot be empty or has invalid format"));
+                exceptionRepresentation = ExceptionRepresentation.builder()
+                        .errorMessage("Invalid email")
+                        .errorSource("email")
+                        .build();
             } else if (errorMessage.contains("Invalid password")) {
-                return ResponseEntity.badRequest().body(new ErrorResponse("Invalid password", "Password must be at least 8 characters long"));
+                exceptionRepresentation = ExceptionRepresentation.builder()
+                        .errorMessage("Invalid password")
+                        .errorSource("password")
+                        .build();
             } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse("Unauthorized", "Invalid email or password"));
+                exceptionRepresentation = ExceptionRepresentation.builder()
+                        .errorMessage("Invalid email or password")
+                        .errorSource("general")
+                        .build();
             }
+
+            return ResponseEntity.badRequest().body(exceptionRepresentation);
         }
     }
+
 
 
 

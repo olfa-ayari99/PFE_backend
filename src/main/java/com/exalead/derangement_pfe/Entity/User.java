@@ -43,16 +43,14 @@ public class User implements UserDetails {
     @NotNull(message = "L'email ne doit pas etre vide")
     @NotEmpty(message = "L'email ne doit pas etre vide")
     @NotBlank(message = "L'email ne doit pas etre vide")
-     @Email(message = "L'email n'est conforme")
+    @Email(message = "L'email n'est conforme")
     private String email;
     @NotNull(message = "Le mot de passe ne doit pas etre vide")
     @NotEmpty(message = "Le mot de passe ne doit pas etre vide")
     @NotBlank(message = "Le mot de passe ne doit pas etre vide")
-    //@Size(min = 8, max = 16, message = "Le mot de passe doit etre entre 8 et 16 caracteres")
     private String password;
     private String address;
     private String telNum;
-
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -67,11 +65,16 @@ public class User implements UserDetails {
     @ManyToOne
     private Offre offre;
 
-
+    public Role getRole() {
+        if (this.role == null) {
+            this.role = Role.ADMIN; // Assign a default role
+        }
+        return this.role;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return role.getAuthorities();
+        return getRole().getAuthorities();
     }
 
     @Override

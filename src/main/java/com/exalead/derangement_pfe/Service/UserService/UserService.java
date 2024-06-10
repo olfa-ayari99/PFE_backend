@@ -32,6 +32,9 @@ public class UserService implements IUserService {
         private final PasswordEncoder passwordEncoder;
 
 
+
+
+
         public void changePassword(ChangePasswordRequest request, Principal connectedUser) {
 
                 var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();

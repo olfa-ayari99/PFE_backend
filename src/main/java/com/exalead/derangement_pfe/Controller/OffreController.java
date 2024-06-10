@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
+@RequestMapping("/api/v1/offre")
 @Tag(name="offre")
 public class OffreController {
 
