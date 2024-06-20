@@ -14,13 +14,13 @@ import java.util.Set;
 @ToString
 @Data
 @Table(name ="Offre")
-public class Offre implements Serializable {
+public class Offre  implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idOffre;
     private String nomOffre;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "offre")
+    @OneToMany(mappedBy = "offre", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     Set<User> users;
 
 }

@@ -19,7 +19,7 @@ import java.util.Collections;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:64317")
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 @Tag(name = "authentication")

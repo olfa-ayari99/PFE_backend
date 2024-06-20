@@ -12,7 +12,7 @@
 
     @RestController
     @AllArgsConstructor
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://localhost:64317")
     @RequestMapping("/api/v1/localisation")
     @Tag(name= "localisation")
     public class LocalisationController {

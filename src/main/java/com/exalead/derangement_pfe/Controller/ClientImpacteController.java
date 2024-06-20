@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:64317")
 @RequestMapping("/api/v1/ClientImpacte")
 @Tag(name="ClientImpacte")
 public class ClientImpacteController {
@@ -25,15 +25,15 @@ public class ClientImpacteController {
         return clientImpacteService.addClient(client);
     }
 
-    /*@PutMapping("/updateClient")
+    @PutMapping("/updateClient")
     public ClientImpacte updateClient(@RequestBody ClientImpacte c){
         return clientImpacteService.updateClient(c);
     }
-    @DeleteMapping("/deleteUser/{nd}")
-    public void deleteClient(@PathVariable("nd") Long nd){
-        clientImpacteService.deleteClient(nd);
+    @DeleteMapping("/deleteUser/{idClient}")
+    public void deleteClient(@PathVariable("idClient") Long idClient){
+        clientImpacteService.deleteClient(idClient);
 
-    }*/
+    }
 
     @GetMapping("/getClient/{idClient}")
     @ResponseBody

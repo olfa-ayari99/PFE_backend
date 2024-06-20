@@ -19,7 +19,7 @@ import lombok.*;
     @ToString
     @Data
     @Table(name ="Derangement")
-    public class Derangement implements Serializable {
+    public class Derangement  implements Serializable {
 
 
         @Id
@@ -54,8 +54,8 @@ import lombok.*;
         private Statut statut;
 
         private String profilePlateauConcerne;
-        private String longitude;
-        private String latidude;
+        private Double longitude;
+        private Double latidude;
 
         private String script;
 
@@ -63,7 +63,7 @@ import lombok.*;
         @ManyToOne
         private Equipement equipement;
 
-        @ManyToMany(cascade = CascadeType.ALL)
+        @ManyToMany
         @JsonIgnore
         @JoinTable(
                 name = "client_derangement",

@@ -10,7 +10,7 @@ public interface IDerangementService {
 
     public Derangement addDerangement(Derangement derangement, Long userId, Long idEquip);
     public void deleteDerangement(Long idDerangement);
-    public Derangement updateDerangement(Derangement d);
+    public Derangement updateDerangement(Long idDerangement, Derangement d);
     public List<Derangement> getAllDerangements();
     public Derangement getDerangement(Long idDerangement);
 

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:64317")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/derangement")
@@ -32,10 +32,12 @@ public class DerangementController {
         return new ResponseEntity<>(newDerangement, HttpStatus.CREATED);
     }
 
-    @PutMapping("/updateDerangement")
-    public Derangement updateDerangement(Derangement d){
-        return derangementService.updateDerangement(d);
+    @PutMapping("/updateDerangement/{idDerangement}")
+    public ResponseEntity<Derangement> updateDerangement(@PathVariable("idDerangement") Long idDerangement, @RequestBody Derangement d) {
+        Derangement updatedDerangement = derangementService.updateDerangement(idDerangement, d);
+        return new ResponseEntity<>(updatedDerangement, HttpStatus.OK);
     }
+
     @DeleteMapping("/deleteDerangement/{idDerangement}")
     public void deleteDerangement(@PathVariable("idDerangement") Long idDerangement){
         derangementService.deleteDerangement(idDerangement);

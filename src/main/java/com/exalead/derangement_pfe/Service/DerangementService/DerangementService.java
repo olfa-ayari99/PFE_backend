@@ -41,13 +41,37 @@ public class DerangementService implements IDerangementService {
 
     @Override
     public void deleteDerangement(Long idDerangement){
+
         derangementRepository.deleteById(idDerangement);
     }
 
     @Override
-    public Derangement updateDerangement(Derangement d){
-        return derangementRepository.save(d);
+    public Derangement updateDerangement(Long idDerangement, Derangement d) {
+        Derangement existingDerangement = derangementRepository.findById(idDerangement).orElseThrow(() -> new RuntimeException("Derangement not found"));
+
+        // Mettre à jour les champs de l'objet existant avec les nouvelles valeurs
+        existingDerangement.setNomDerangement(d.getNomDerangement());
+        existingDerangement.setDateCreationDer(d.getDateCreationDer());
+        existingDerangement.setReseau(d.getReseau());
+        existingDerangement.setServiceImpacte(d.getServiceImpacte());
+        existingDerangement.setCause(d.getCause());
+        existingDerangement.setDateDebutDerangement(d.getDateDebutDerangement());
+        existingDerangement.setDateConstat(d.getDateConstat());
+        existingDerangement.setDelaiPrevisionnel(d.getDelaiPrevisionnel());
+        existingDerangement.setDateResolutionPrevu(d.getDateResolutionPrevu());
+        existingDerangement.setDateResolutionReel(d.getDateResolutionReel());
+        existingDerangement.setPorteur(d.getPorteur());
+        existingDerangement.setStatut(d.getStatut());
+        existingDerangement.setProfilePlateauConcerne(d.getProfilePlateauConcerne());
+        existingDerangement.setLongitude(d.getLongitude());
+        existingDerangement.setLatidude(d.getLatidude());
+        existingDerangement.setScript(d.getScript());
+        existingDerangement.setEquipement(d.getEquipement());
+        existingDerangement.setUser(d.getUser());
+
+        return derangementRepository.save(existingDerangement);
     }
+
 
     @Override
     public List<Derangement> getAllDerangements(){

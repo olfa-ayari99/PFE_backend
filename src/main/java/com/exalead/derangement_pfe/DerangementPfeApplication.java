@@ -19,16 +19,17 @@ public class DerangementPfeApplication {
         SpringApplication.run(DerangementPfeApplication.class, args);
     }
 
-  /*  @Bean
+   /*@Bean
     public CommandLineRunner commandLineRunner(
             AuthenticationService service
     ) {
         return args -> {
             var admin = RegisterRequest.builder()
-                    .firstname("Admin")
+                    .firstname("Admin")0.+
                     .lastname("Admin")
-                    .email("admin@mail.com")
-                    .password("password")
+                    .email("admin@admin.com")
+                    .password("admin")
+
                     .role(ADMIN)
                     .build();
             System.out.println("Admin token: " + service.register(admin).getAccessToken());

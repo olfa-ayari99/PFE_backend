@@ -1,5 +1,6 @@
 package com.exalead.derangement_pfe.Config;
 
+import com.exalead.derangement_pfe.Entity.User;
 import com.google.api.client.util.Value;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -43,6 +44,8 @@ public class JwtService {
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", userDetails.getAuthorities().iterator().next().getAuthority());
+        claims.put("idUser", ((User) userDetails).getIdUser());
+        claims.put("fullName", ((User) userDetails).getFirstname()+" " + ((User) userDetails).getLastname());
         return generateToken(claims, userDetails);
     }
 

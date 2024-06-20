@@ -17,7 +17,7 @@ import java.util.Set;
 @ToString
 @Data
 @Table(name = "Equipement")
-public class Equipement implements Serializable {
+public class Equipement  implements Serializable {
 
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
@@ -28,7 +28,7 @@ public class Equipement implements Serializable {
     private Double latitude;
     private String ville;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "equipement")
+    @OneToMany( cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "equipement")
     private Set<Derangement> derangements;
 
     public void setIdLocal(Long idLocal) {

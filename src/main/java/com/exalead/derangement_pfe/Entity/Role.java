@@ -14,43 +14,42 @@ import static com.exalead.derangement_pfe.Entity.Permission.*;
 @RequiredArgsConstructor
 public enum Role {
 
-
-
     USER(Collections.emptySet()),
-    ADMIN(
-            Set.of(
-                    ADMIN_READ,
-                    ADMIN_UPDATE,
-                    ADMIN_DELETE,
-                    ADMIN_CREATE,
-                    AOT_READ,
-                    AOT_UPDATE,
-                    AOT_DELETE,
-                    AOT_CREATE,
-                    ASC_READ,
-                    ASC_UPDATE,
-                    ASC_DELETE,
-                    ASC_CREATE
-            )
-    ),
+
     AOT(
             Set.of(
-                    AOT_READ,
-                    AOT_UPDATE,
-                    AOT_DELETE,
-                    AOT_CREATE
+                    Permission.AOT_READ,
+                    Permission.AOT_UPDATE,
+                    Permission.AOT_DELETE,
+                    Permission.AOT_CREATE
             )
     ),
+
     ASC(
             Set.of(
-            ASC_READ,
-            ASC_UPDATE,
-            ASC_DELETE,
-            ASC_CREATE
+                    Permission.ASC_READ,
+                    Permission.ASC_UPDATE,
+                    Permission.ASC_DELETE,
+                    Permission.ASC_CREATE
             )
-    )
+    ),
 
-    ;
+    ADMIN(
+            Set.of(
+                    Permission.ADMIN_READ,
+                    Permission.ADMIN_UPDATE,
+                    Permission.ADMIN_DELETE,
+                    Permission.ADMIN_CREATE
+                   /* Permission.AOT_READ,
+                    Permission.AOT_UPDATE,
+                    Permission.AOT_DELETE,
+                    Permission.AOT_CREATE,
+                    Permission.ASC_READ,
+                    Permission.ASC_UPDATE,
+                    Permission.ASC_DELETE,
+                    Permission.ASC_CREATE*/
+            )
+    );
 
     @Getter
     private final Set<Permission> permissions;

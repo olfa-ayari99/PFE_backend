@@ -1,6 +1,7 @@
 package com.exalead.derangement_pfe.Entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
@@ -26,7 +27,7 @@ import java.util.Set;
 @ToString
 @Data
 @Table(name = "User")
-public class User implements UserDetails {
+public class User  implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,14 +53,16 @@ public class User implements UserDetails {
     private String address;
     private String telNum;
 
+
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user")
     private Set<Derangement> derangementSet;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Token> tokens;
 
     @ManyToOne
@@ -71,7 +74,7 @@ public class User implements UserDetails {
         }
         return this.role;
     }
-
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRole().getAuthorities();

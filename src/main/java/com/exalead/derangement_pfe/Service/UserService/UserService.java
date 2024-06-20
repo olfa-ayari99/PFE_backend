@@ -3,8 +3,10 @@ package com.exalead.derangement_pfe.Service.UserService;
 import com.exalead.derangement_pfe.Entity.*;
 import com.exalead.derangement_pfe.Exceptions.UnauthorizedUserException;
 import com.exalead.derangement_pfe.Repository.OffreRepository;
+import com.exalead.derangement_pfe.Repository.TokenRepository;
 import com.exalead.derangement_pfe.Repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ public class UserService implements IUserService {
         UserRepository userRepository;
         @Autowired
         OffreRepository offreRepository;
+        @Autowired
+        TokenRepository tokenRepository;
 
 
         private final PasswordEncoder passwordEncoder;
@@ -63,7 +67,9 @@ public class UserService implements IUserService {
 
 
         @Override
+        @Transactional
         public void deleteUser(Long idUser){
+                tokenRepository.deleteByUserIdUser(idUser);
                 userRepository.deleteById(idUser);
         }
 

@@ -45,18 +45,31 @@ public class AuthenticationService {
     public AuthenticationResponse register(RegisterRequest request) throws UserAlreadyExistsException {
     validator.validate(request);
 
+        // Vérifie s'il existe déjà un utilisateur administrateur dans la base de données
+       // boolean adminExists = repository.existsByRole(Role.ADMIN);
+
         if (repository.existsByEmail(request.getEmail())) {
             // If user with the provided email already exists, throw an exception
             throw new UserAlreadyExistsException("User with this email already exists.");
         }
-
-        var user = User.builder()
+        System.out.println(request.getRole());
+        var user = new User();
+if(request.getRole() == null)
+{  user = User.builder()
+        .firstname(request.getFirstname())
+        .lastname(request.getLastname())
+        .email(request.getEmail())
+        .password(passwordEncoder.encode(request.getPassword()))
+        .role(Role.USER)
+        .build();}
+else{
+         user = User.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
-                .build();
+                .build();}
         var savedUser = repository.save(user);
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
@@ -69,6 +82,7 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
+
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(

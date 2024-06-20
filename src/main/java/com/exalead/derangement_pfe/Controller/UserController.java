@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:64317")
 @RequestMapping("/api/v1/user")
 @Tag(name = "user")
 public class UserController {
@@ -26,14 +26,7 @@ public class UserController {
    private IUserService userService;
 
 
-    @PatchMapping
-    public ResponseEntity<?> changePassword(
-            @RequestBody ChangePasswordRequest request,
-            Principal connectedUser
-    ) {
-        userService.changePassword(request, connectedUser);
-        return ResponseEntity.ok().build();
-    }
+
 
 
 
@@ -74,6 +67,16 @@ public class UserController {
         return user.map(value -> ResponseEntity.ok().body(value)).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+
+    @PatchMapping("/changePassword")
+    public ResponseEntity<?> changePassword(
+            @RequestBody ChangePasswordRequest request,
+            Principal connectedUser
+    ) {
+        userService.changePassword(request, connectedUser);
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping ("/affecterOffre/{idOffre}")
     public ResponseEntity<String> affecterOffreAUtilisateurs(
             @RequestBody List<Long> userIds,
@@ -83,6 +86,8 @@ public class UserController {
 
         return ResponseEntity.ok("L'offre a été affectée avec succès aux utilisateurs.");
     }
+
+
 
 
 

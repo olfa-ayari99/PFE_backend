@@ -1,6 +1,7 @@
 package com.exalead.derangement_pfe.Repository;
 
 import com.exalead.derangement_pfe.Entity.Offre;
+import com.exalead.derangement_pfe.Entity.Role;
 import com.exalead.derangement_pfe.Entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,6 +15,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
+    boolean existsByRole(Role role);
 
     Optional<User> findByEmail(String email);
     boolean existsByEmail(String email);

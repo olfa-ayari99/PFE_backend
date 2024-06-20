@@ -9,14 +9,14 @@ public enum Permission {
     ADMIN_UPDATE("admin:update"),
     ADMIN_CREATE("admin:create"),
     ADMIN_DELETE("admin:delete"),
-    AOT_READ("management:read"),
-    AOT_UPDATE("management:update"),
-    AOT_CREATE("management:create"),
-    AOT_DELETE("management:delete"),
-    ASC_READ("management:read"),
-    ASC_UPDATE("management:update"),
-    ASC_CREATE("management:create"),
-    ASC_DELETE("management:delete"),
+    AOT_READ("aot:read"),
+    AOT_UPDATE("aot:update"),
+    AOT_CREATE("aot:create"),
+    AOT_DELETE("aot:delete"),
+    ASC_READ("asc:read"),
+    ASC_UPDATE("asc:update"),
+    ASC_CREATE("asc:create"),
+    ASC_DELETE("asc:delete"),
 
 
 

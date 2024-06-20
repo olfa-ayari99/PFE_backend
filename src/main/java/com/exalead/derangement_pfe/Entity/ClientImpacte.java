@@ -19,7 +19,7 @@ import java.util.Set;
 @ToString
 @Data
 @Table(name = "ClientImpacte")
-public class ClientImpacte implements Serializable {
+public class ClientImpacte  implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +37,8 @@ public class ClientImpacte implements Serializable {
     private String numeroLigne;
 
 
-    @ManyToMany( mappedBy = "clientImpactes", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "clientImpactes", cascade = CascadeType.ALL)
+    @JsonIgnore
      private Set<Derangement> derangements;
 
 
