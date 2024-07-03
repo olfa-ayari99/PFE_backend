@@ -8,13 +8,14 @@ import com.exalead.derangement_pfe.Service.UserService.IUserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-@CrossOrigin(origins = "http://localhost:64317")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/derangement")
@@ -26,8 +27,8 @@ public class DerangementController {
     IDerangementService derangementService;
 
 
-    @PostMapping("/add/{userId}/{idEquip}")
-    public ResponseEntity<Derangement> addDerangement(@RequestBody Derangement derangement, @PathVariable Long userId, @PathVariable Long idEquip) {
+    @PostMapping("/add/{userId}")
+    public ResponseEntity<Derangement> addDerangement(@RequestBody Derangement derangement, @PathVariable Long userId, @RequestParam(required = false) Long idEquip) {
         Derangement newDerangement = derangementService.addDerangement(derangement, userId, idEquip);
         return new ResponseEntity<>(newDerangement, HttpStatus.CREATED);
     }
@@ -82,4 +83,10 @@ public class DerangementController {
         return derangementService.searchDerangements(criteria);
     }
 
+
+    @GetMapping("/api/derangements")
+    public Page<Derangement> getDerangements(@RequestParam(defaultValue = "0") int page,
+                                             @RequestParam(defaultValue = "10") int size) {
+        return derangementService.getDerangements(page, size);
+    }
 }

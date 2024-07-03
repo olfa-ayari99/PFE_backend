@@ -45,4 +45,6 @@ public class OffreService implements IOffreService {
         Offre o = offreRepository.findById(idOffre).orElse(null);
         return o;
     }
+
+
 }

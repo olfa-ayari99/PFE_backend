@@ -7,6 +7,7 @@ import com.exalead.derangement_pfe.Service.UserService.IUserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
-@CrossOrigin(origins = "http://localhost:64317")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/v1/user")
 @Tag(name = "user")
 public class UserController {
@@ -77,17 +78,23 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping ("/affecterOffre/{idOffre}")
+    @PostMapping ("/affecterOffre/{idUser}")
     public ResponseEntity<String> affecterOffreAUtilisateurs(
-            @RequestBody List<Long> userIds,
-            @PathVariable ("idOffre")Long idOffre) {
+            @PathVariable Long idUser,
+            @RequestBody List<Long> offreIds) {
 
-        userService.affecterOffreAUtilisateurs(userIds, idOffre);
+        userService.affecterOffreAUtilisateurs(idUser, offreIds);
 
         return ResponseEntity.ok("L'offre a été affectée avec succès aux utilisateurs.");
     }
 
 
+
+    @GetMapping("/api/users")
+    public Page<User> getUsers(@RequestParam(defaultValue = "0") int page,
+                               @RequestParam(defaultValue = "10") int size) {
+        return userService.getUsers(page, size);
+    }
 
 
 

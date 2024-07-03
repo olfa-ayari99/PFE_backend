@@ -1,6 +1,7 @@
 package com.exalead.derangement_pfe.Entity;
 
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -8,12 +9,15 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
-
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -27,6 +31,7 @@ import java.util.Set;
 @ToString
 @Data
 @Table(name = "User")
+@EntityListeners(AuditingEntityListener.class)
 public class User  implements UserDetails {
 
     @Id
@@ -58,6 +63,20 @@ public class User  implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+
+    @CreatedDate
+    @Column(
+            name = "createdDate",
+            nullable = false,
+            updatable = false
+    )
+    private LocalDateTime createdDate;
+
+    @LastModifiedDate
+    @Column(name = "lastModifiedDate")
+    private LocalDateTime lastModifiedDate;
+
+
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user")
     private Set<Derangement> derangementSet;
 
@@ -65,8 +84,14 @@ public class User  implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Token> tokens;
 
-    @ManyToOne
-    private Offre offre;
+    @ManyToMany
+    @JsonIgnore
+    @JoinTable(
+            name = "offre_user",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "offre_id")
+    )
+    private Set<Offre> offres;
 
     public Role getRole() {
         if (this.role == null) {
@@ -109,4 +134,8 @@ public class User  implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
+
+
 }

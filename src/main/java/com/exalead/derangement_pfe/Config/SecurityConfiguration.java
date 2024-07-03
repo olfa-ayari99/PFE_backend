@@ -76,8 +76,8 @@
                                     .requestMatchers("/api/v1/**").hasAnyRole(ADMIN.name(), AOT.name(), ASC.name(), "USER")
                                     //.requestMatchers(GET, "/api/v1/**").hasAnyAuthority(ADMIN_READ.name(), AOT_READ.name(), ASC_READ.name(), "USER")
                                     //.requestMatchers(POST, "/api/v1/**").hasAnyAuthority(ADMIN_CREATE.name(), AOT_CREATE.name(), ASC_CREATE.name(), "USER")
-                                    //.requestMatchers(PUT, "/api/v1/**").hasAnyAuthority(ADMIN_UPDATE.name(), AOT_UPDATE.name(), ASC_UPDATE.name(), "USER")
-                                    //.requestMatchers(DELETE, "/api/v1/**").hasAnyAuthority(ADMIN_DELETE.name(), AOT_DELETE.name(), ASC_DELETE.name(), "USER" )
+                                   // .requestMatchers(PUT, "/api/v1/**").hasAnyAuthority(ADMIN_UPDATE.name(), AOT_UPDATE.name(), ASC_UPDATE.name(), "USER")
+                                   // .requestMatchers(DELETE, "/api/v1/**").hasAnyAuthority(ADMIN_DELETE.name(), AOT_DELETE.name(), ASC_DELETE.name(), "USER" )
                                     .anyRequest().authenticated()
                     )
                     .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
@@ -111,7 +111,7 @@
         public CorsConfigurationSource corsConfigurationSource() {
             CorsConfiguration configuration = new CorsConfiguration();
             configuration.setAllowCredentials(true);
-            configuration.setAllowedOrigins(List.of("http://localhost:64317"));
+            configuration.setAllowedOrigins(List.of("http://localhost:4200"));
             configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
             configuration.setAllowedHeaders(List.of("Origin", "Content-Type", "Accept", "Authorization"));
             UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

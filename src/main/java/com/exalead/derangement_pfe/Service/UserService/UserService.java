@@ -5,20 +5,27 @@ import com.exalead.derangement_pfe.Exceptions.UnauthorizedUserException;
 import com.exalead.derangement_pfe.Repository.OffreRepository;
 import com.exalead.derangement_pfe.Repository.TokenRepository;
 import com.exalead.derangement_pfe.Repository.UserRepository;
+
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 @Service
 @Slf4j
@@ -95,25 +102,26 @@ public class UserService implements IUserService {
         }
 
         @Override
-        public void affecterOffreAUtilisateurs(List<Long> userIds, Long idOffre) {
-                // Trouver l'offre par son ID, ou lancer une exception si elle n'existe pas
-                Offre offre = offreRepository.findById(idOffre).orElseThrow(() -> new EntityNotFoundException("Offre non trouvée"));
-
-                // Récupérer les utilisateurs par leurs IDs
-                List<User> users = userRepository.findAllById(userIds);
-                if (users.size() != userIds.size()) {
-                        throw new RuntimeException("Un ou plusieurs utilisateurs n'ont pas été trouvés");
+        public void affecterOffreAUtilisateurs(Long idUser, List<Long> offreIds) {
+                User u = userRepository.findById(idUser).orElseThrow(() -> new RuntimeException("User non trouvé"));
+                Set<Offre> offres = new HashSet<>();
+                for (Long idOffre : offreIds) {
+                        Offre o = offreRepository.findById(idOffre).orElseThrow(() -> new RuntimeException("Offre non trouvé"));
+                        offres.add(o);
                 }
-
-                // Associer chaque utilisateur à l'offre
-                for (User user : users) {
-                        user.setOffre(offre);
-                }
-
-                // Sauvegarder les utilisateurs avec l'offre associée
-                userRepository.saveAll(users);
+                u.getOffres().addAll(offres);
+                userRepository.save(u);
         }
 
 
 
+        public Page<User> getUsers(int page, int size) {
+                Pageable pageable = PageRequest.of(page, size);
+                return userRepository.findAll(pageable);
+        }
 }
+
+
+
+
+

@@ -12,7 +12,7 @@
 
     @RestController
     @AllArgsConstructor
-    @CrossOrigin(origins = "http://localhost:64317")
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping("/api/v1/localisation")
     @Tag(name= "localisation")
     public class LocalisationController {
@@ -32,15 +32,15 @@
             return ResponseEntity.ok(updatedLocation);
         }
 
-        @DeleteMapping("/deleteLocation/{idLocal}")
-        public ResponseEntity<Void> deleteLocation(@PathVariable("idLocal") Long idLocal) {
-            localisationService.deleteLocation(idLocal);
+        @DeleteMapping("/deleteLocation/{idEquip}")
+        public ResponseEntity<Void> deleteLocation(@PathVariable("idEquip") Long idEquip) {
+            localisationService.deleteLocation(idEquip);
             return ResponseEntity.noContent().build();
         }
 
-        @GetMapping("/getlocation/{idLocal}")
-        public ResponseEntity<Equipement> getLocation(@PathVariable("idLocal") Long idLocal) {
-            Equipement location = localisationService.getLocation(idLocal);
+        @GetMapping("/getlocation/{idEquip}")
+        public ResponseEntity<Equipement> getLocation(@PathVariable("idEquip") Long idEquip) {
+            Equipement location = localisationService.getLocation(idEquip);
             return ResponseEntity.ok(location);
         }
 

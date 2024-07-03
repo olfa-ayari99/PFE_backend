@@ -5,10 +5,16 @@ package com.exalead.derangement_pfe.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 
-    import java.io.Serializable;
-    import java.util.Date;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Date;
     import java.util.Set;
 
     @Entity
@@ -19,6 +25,7 @@ import lombok.*;
     @ToString
     @Data
     @Table(name ="Derangement")
+    @EntityListeners(AuditingEntityListener.class)
     public class Derangement  implements Serializable {
 
 
@@ -58,6 +65,21 @@ import lombok.*;
         private Double latidude;
 
         private String script;
+
+
+
+
+        @CreatedDate
+        @Column(
+                name = "createdDate",
+                nullable = false,
+                updatable = false
+        )
+        private LocalDateTime createdDate;
+
+        @LastModifiedDate
+        @Column(name = "lastModifiedDate")
+        private LocalDateTime lastModifiedDate;
 
 
         @ManyToOne

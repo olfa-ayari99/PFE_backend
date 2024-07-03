@@ -7,8 +7,9 @@ import java.util.List;
 public interface ILocalisationService {
 
     public Equipement addLocation (Equipement location);
-    public void deleteLocation(Long idLocal);
+    public void deleteLocation(Long idEquip);
     public Equipement updateLocation(Equipement l);
     public List<Equipement> getAllLocations();
-    public Equipement getLocation(Long idLocal);
+    public Equipement getLocation(Long idEquip);
+
 }

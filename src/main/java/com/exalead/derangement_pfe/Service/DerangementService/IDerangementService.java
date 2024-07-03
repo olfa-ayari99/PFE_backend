@@ -2,6 +2,7 @@ package com.exalead.derangement_pfe.Service.DerangementService;
 
 import com.exalead.derangement_pfe.Entity.Derangement;
 import com.exalead.derangement_pfe.Entity.Statut;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Map;
@@ -19,5 +20,8 @@ public interface IDerangementService {
     public List<Derangement> searchDerangements(Map<String, Object> criteria);
 
     public  List<Derangement> getDerangementByUser (Long idUser);
+
+    public Page<Derangement> getDerangements(int page, int size);
+
 
 }

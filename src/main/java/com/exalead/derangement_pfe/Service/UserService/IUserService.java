@@ -2,6 +2,7 @@ package com.exalead.derangement_pfe.Service.UserService;
 
 import com.exalead.derangement_pfe.Entity.ChangePasswordRequest;
 import com.exalead.derangement_pfe.Entity.User;
+import org.springframework.data.domain.Page;
 
 import java.security.Principal;
 import java.util.List;
@@ -18,5 +19,6 @@ public interface IUserService {
 
      public void changePassword(ChangePasswordRequest request, Principal connectedUser);
 
-     public void affecterOffreAUtilisateurs(List<Long> userIds, Long idOffre);
+     public void affecterOffreAUtilisateurs(Long idUser, List<Long> offreIds);
+     public Page<User> getUsers(int page, int size);
 }

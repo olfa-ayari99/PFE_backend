@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:64317")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/v1/management")
 @Tag(name = "Management")
 public class ManagementController {

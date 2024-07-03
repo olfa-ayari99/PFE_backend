@@ -10,6 +10,9 @@ import com.exalead.derangement_pfe.Repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,10 +33,12 @@ public class DerangementService implements IDerangementService {
 
     public Derangement addDerangement(Derangement derangement, Long userId, Long idEquip) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
-        Equipement equipement = localisationRepository.findById(idEquip).orElseThrow(() -> new RuntimeException("Équipement non trouvé"));
-
         derangement.setUser(user);
-        derangement.setEquipement(equipement);
+        if(idEquip != null) {
+            Equipement equipement = localisationRepository.findById(idEquip).orElseThrow(() -> new RuntimeException("Équipement non trouvé"));
+            derangement.setEquipement(equipement);
+        }
+
 
         return derangementRepository.save(derangement);
     }
@@ -100,6 +105,8 @@ public class DerangementService implements IDerangementService {
     public List<Derangement> findDerangementByClient (Long idClient){
         return derangementRepository.findByClientImpactes_IdClient(idClient);
     }
+
+    //search derangement by statut ou clientId et si il n'aya pas de critère allDerangement
     public List<Derangement> searchDerangements(Map<String, Object> criteria) {
         if (criteria.containsKey("statut") && criteria.containsKey("idClient")) {
             Statut statut = Statut.valueOf((String) criteria.get("statut"));
@@ -117,6 +124,10 @@ public class DerangementService implements IDerangementService {
     }
 
 
+    public Page<Derangement> getDerangements(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return derangementRepository.findAll(pageable);
+    }
 
 
 
